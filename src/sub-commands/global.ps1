@@ -1,4 +1,4 @@
-$cmds = @(
+Set-Variable -Name cmds -Value @(
 	'add',
 	'bin',
 	'list',
