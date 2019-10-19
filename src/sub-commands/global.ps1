@@ -1,8 +1,12 @@
-Set-Variable -Name cmds -Value @(
-	'add',
-	'bin',
-	'list',
-	'remove',
-	'upgrade',
-	'upgrade-interactive'
-)
+if (-not $subCommands) {
+	$subCommands = [ordered] @{ }
+}
+
+$subCommands['global'] = [ordered] @{
+	'add'                 = @{ };
+	'bin'                 = @{ };
+	'list'                = @{ };
+	'remove'              = @{ };
+	'upgrade'             = @{ };
+	'upgrade-interactive' = @{ };
+}
