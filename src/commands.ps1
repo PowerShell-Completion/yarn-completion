@@ -1,7 +1,7 @@
 . $PSScriptRoot\options.ps1
 . $PSScriptRoot\subCommands.ps1
 
-Set-Variable -Name cmds -Option Constant -Value @(
+Set-Variable -Name cmds -Value @(
 	'add',
 	'audit',
 	'autoclean',
