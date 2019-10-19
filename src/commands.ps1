@@ -1,5 +1,9 @@
-$cmds = @(
+. $PSScriptRoot\options.ps1
+. $PSScriptRoot\subCommands.ps1
+
+Set-Variable -Name commands -Value @(
 	'add',
+	'audit',
 	'autoclean',
 	'bin',
 	'cache',
@@ -16,25 +20,29 @@ $cmds = @(
 	'install',
 	'licenses',
 	'link',
+	'list',
 	'lockfile',
 	'login',
 	'logout',
-	'list',
+	'node',
 	'outdated',
 	'owner',
 	'pack',
+	'policies',
 	'prune',
 	'publish',
 	'remove',
 	'run',
-	'self-update',
 	'tag',
 	'team',
 	'test',
 	'unlink',
+	'unplug',
 	'upgrade',
 	'upgrade-interactive',
 	'version',
 	'versions',
-	'why'
+	'why',
+	'workspace',
+	'workspaces'
 )
