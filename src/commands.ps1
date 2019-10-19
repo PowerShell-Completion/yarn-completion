@@ -1,5 +1,6 @@
 Set-Variable -Name cmds -Value @(
 	'add',
+	'audit',
 	'autoclean',
 	'bin',
 	'cache',
@@ -16,13 +17,14 @@ Set-Variable -Name cmds -Value @(
 	'install',
 	'licenses',
 	'link',
+	'list',
 	'lockfile',
 	'login',
 	'logout',
-	'list',
 	'outdated',
 	'owner',
 	'pack',
+	'policies',
 	'prune',
 	'publish',
 	'remove',
@@ -36,5 +38,7 @@ Set-Variable -Name cmds -Value @(
 	'upgrade-interactive',
 	'version',
 	'versions',
-	'why'
+	'why',
+	'workspace',
+	'workspaces'
 )
