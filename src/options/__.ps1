@@ -1,9 +1,5 @@
-if (-not $options) {
-	$options = [ordered] @{ }
-}
-
 # Global options
-$options['__'] = @(
+Set-Variable -Name globalOptions -Value @(
 	'-v',
 	'--version',
 	'--no-default-rc',
