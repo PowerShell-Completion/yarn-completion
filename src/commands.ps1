@@ -1,4 +1,7 @@
-Set-Variable -Name cmds -Value @(
+. $PSScriptRoot\options.ps1
+. $PSScriptRoot\subCommands.ps1
+
+Set-Variable -Name cmds -Option Constant -Value @(
 	'add',
 	'audit',
 	'autoclean',
@@ -21,6 +24,7 @@ Set-Variable -Name cmds -Value @(
 	'lockfile',
 	'login',
 	'logout',
+	'node',
 	'outdated',
 	'owner',
 	'pack',
@@ -29,11 +33,11 @@ Set-Variable -Name cmds -Value @(
 	'publish',
 	'remove',
 	'run',
-	'self-update',
 	'tag',
 	'team',
 	'test',
 	'unlink',
+	'unplug',
 	'upgrade',
 	'upgrade-interactive',
 	'version',
@@ -42,3 +46,15 @@ Set-Variable -Name cmds -Value @(
 	'workspace',
 	'workspaces'
 )
+$commands = [ordered] @{ }
+
+$cmds | ForEach-Object {
+	$commands[$_] = @{}
+
+	if ($options[$_]) {
+		$commands[$_]['options'] = $options[$_]
+	}
+	if ($subCommands[$_]) {
+		$commands[$_]['subCommands'] = $subCommands[$_]
+	}
+}
