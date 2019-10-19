@@ -1,7 +1,7 @@
 . $PSScriptRoot\options.ps1
 . $PSScriptRoot\subCommands.ps1
 
-Set-Variable -Name cmds -Value @(
+Set-Variable -Name commands -Value @(
 	'add',
 	'audit',
 	'autoclean',
@@ -46,15 +46,3 @@ Set-Variable -Name cmds -Value @(
 	'workspace',
 	'workspaces'
 )
-$commands = [ordered] @{ }
-
-$cmds | ForEach-Object {
-	$commands[$_] = @{}
-
-	if ($options[$_]) {
-		$commands[$_]['options'] = $options[$_]
-	}
-	if ($subCommands[$_]) {
-		$commands[$_]['subCommands'] = $subCommands[$_]
-	}
-}
