@@ -7,6 +7,14 @@ $subCommands['global'] = [ordered] @{
 	'bin'                 = @{ };
 	'list'                = @{ };
 	'remove'              = @{ };
-	'upgrade'             = @{ };
-	'upgrade-interactive' = @{ };
+	'upgrade'             = @{
+		options = @(
+			'--latest'
+		)
+	};
+	'upgrade-interactive' = @{
+		options = @(
+			'--latest'
+		)
+	};
 }
