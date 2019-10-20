@@ -3,7 +3,7 @@ if (-not $options) {
 }
 
 # Options for `yarn install`
-$options['install'] = @(
-	'-A',
-	'--audit'
-)
+$options['install'] = [ordered] @{
+	'-A'      = @();
+	'--audit' = @();
+}

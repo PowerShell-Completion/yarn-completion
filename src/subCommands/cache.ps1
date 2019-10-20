@@ -4,9 +4,9 @@ if (-not $subCommands) {
 
 $subCommands['cache'] = [ordered] @{
 	'list'  = @{
-		options = @(
-			'--pattern'
-		);
+		options = [ordered] @{
+			'--pattern' = @();
+		};
 	};
 	'dir'   = @{ };
 	'clean' = @{ };

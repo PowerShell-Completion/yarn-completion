@@ -3,6 +3,6 @@ if (-not $options) {
 }
 
 # Options for `yarn node`
-$options['node'] = @(
-	'--into'
-)
+$options['node'] = [ordered] @{
+	'--into' = @();
+}

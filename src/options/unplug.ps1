@@ -3,7 +3,7 @@ if (-not $options) {
 }
 
 # Options for `yarn unplug`
-$options['unplug'] = @(
-	'--clear',
-	'--clear-all'
-)
+$options['unplug'] = [ordered] @{
+	'--clear'     = @();
+	'--clear-all' = @();
+}

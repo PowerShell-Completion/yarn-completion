@@ -3,6 +3,6 @@ if (-not $options) {
 }
 
 # Options for `yarn global`
-$options['global'] = @(
-	'--prefix'
-)
+$options['global'] = [ordered] @{
+	'--prefix' = @();
+}

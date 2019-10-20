@@ -3,9 +3,9 @@ if (-not $options) {
 }
 
 # Options for `yarn init`
-$options['init'] = @(
-	'-y',
-	'--yes',
-	'-p',
-	'--private'
-)
+$options['init'] = [ordered] @{
+	'-y'        = @();
+	'--yes'     = @();
+	'-p'        = @();
+	'--private' = @();
+}

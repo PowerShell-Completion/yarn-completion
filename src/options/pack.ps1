@@ -3,7 +3,7 @@ if (-not $options) {
 }
 
 # Options for `yarn pack`
-$options['pack'] = @(
-	'-f',
-	'--filename'
-)
+$options['pack'] = [ordered] @{
+	'-f'         = @();
+	'--filename' = @();
+}

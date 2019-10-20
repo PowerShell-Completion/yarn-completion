@@ -3,9 +3,9 @@ if (-not $options) {
 }
 
 # Options for `yarn autoclean`
-$options['autoclean'] = @(
-	'-I',
-	'--init',
-	'-F',
-	'--force'
-)
+$options['autoclean'] = [ordered] @{
+	'-I'      = @();
+	'--init'  = @();
+	'-F'      = @();
+	'--force' = @();
+}

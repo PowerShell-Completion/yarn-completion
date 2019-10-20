@@ -3,7 +3,7 @@ if (-not $options) {
 }
 
 # Options for `yarn list`
-$options['list'] = @(
-	'--depth',
-	'--pattern'
-)
+$options['list'] = [ordered] @{
+	'--depth'   = @();
+	'--pattern' = @();
+}

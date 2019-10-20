@@ -3,7 +3,7 @@ if (-not $options) {
 }
 
 # Options for `yarn check`
-$options['check'] = @(
-	'--integrity',
-	'--verify-tree'
-)
+$options['check'] = [ordered] @{
+	'--integrity'   = @();
+	'--verify-tree' = @()
+}

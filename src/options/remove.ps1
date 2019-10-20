@@ -3,7 +3,7 @@ if (-not $options) {
 }
 
 # Options for `yarn remove`
-$options['remove'] = @(
-	'-W',
-	'--ignore-workspace-root-check'
-)
+$options['remove'] = [ordered] @{
+	'-W'                            = @();
+	'--ignore-workspace-root-check' = @();
+}

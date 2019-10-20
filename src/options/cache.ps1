@@ -3,6 +3,6 @@ if (-not $options) {
 }
 
 # Options for `yarn cache`
-$options['cache'] = @(
-	'--pattern'
-)
+$options['cache'] = [ordered] @{
+	'--pattern' = @();
+}

@@ -3,8 +3,11 @@ if (-not $options) {
 }
 
 # Options for `yarn publish`
-$options['publish'] = @(
-	'--new-version',
-	'--access',
-	'--tag'
-)
+$options['publish'] = [ordered] @{
+	'--new-version' = @();
+	'--access'      = @(
+		'public',
+		'restricted'
+	);
+	'--tag'         = @();
+}

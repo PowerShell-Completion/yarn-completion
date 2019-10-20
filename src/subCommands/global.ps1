@@ -8,13 +8,13 @@ $subCommands['global'] = [ordered] @{
 	'list'                = @{ };
 	'remove'              = @{ };
 	'upgrade'             = @{
-		options = @(
-			'--latest'
-		)
+		options = [ordered] @{
+			'--latest' = @();
+		};
 	};
 	'upgrade-interactive' = @{
-		options = @(
-			'--latest'
-		)
+		options = [ordered] @{
+			'--latest' = @();
+		};
 	};
 }

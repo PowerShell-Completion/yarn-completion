@@ -3,14 +3,14 @@ if (-not $options) {
 }
 
 # Options for `yarn upgrade-interactive`
-$options['upgrade-interactive'] = @(
-	'-S',
-	'--scope',
-	'--latest',
-	'-E',
-	'--exact',
-	'-T',
-	'--tilde',
-	'-C',
-	'--caret'
-)
+$options['upgrade-interactive'] = [ordered] @{
+	'-S'       = @();
+	'--scope'  = @();
+	'--latest' = @();
+	'-E'       = @();
+	'--exact'  = @();
+	'-T'       = @();
+	'--tilde'  = @();
+	'-C'       = @();
+	'--caret'  = @();
+}

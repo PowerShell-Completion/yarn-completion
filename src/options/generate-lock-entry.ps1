@@ -3,8 +3,8 @@ if (-not $options) {
 }
 
 # Options for `yarn generate-lock-entry`
-$options['generate-lock-entry'] = @(
-	'--use-manifest',
-	'--resolved',
-	'--registry'
-)
+$options['generate-lock-entry'] = [ordered] @{
+	'--use-manifest' = @();
+	'--resolved'     = @();
+	'--registry'     = @();
+}

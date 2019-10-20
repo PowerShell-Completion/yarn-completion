@@ -4,10 +4,10 @@ if (-not $subCommands) {
 
 $subCommands['config'] = [ordered] @{
 	'set'     = @{
-		options = @(
-			'-g',
-			'--global'
-		);
+		options = [ordered] @{
+			'-g'       = @();
+			'--global' = @();
+		};
 	};
 	'get'     = @{ };
 	'delete'  = @{ };

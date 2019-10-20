@@ -5,37 +5,63 @@ Register-ArgumentCompleter -Native -CommandName @('yarn', 'yarn.cmd') -ScriptBlo
 	. $PSScriptRoot\utils.ps1
 
 	$searchBlock = { $_ -like "$wordToComplete*" }
+
 	$completions = @()
-	$secondPart = if ($commandAst.CommandElements[1]) { $commandAst.CommandElements[1].Value } else { $null } # Main command
-	$thirdPart = if ($commandAst.CommandElements[2]) { $commandAst.CommandElements[2].Value } else { $null } # Sub-command
-	$fourthPart = if ($commandAst.CommandElements[3]) { $commandAst.CommandElements[3].Value } else { $null } # Sub-command's option
+
+	# Main command
+	$mainCommand = if ($commandAst.CommandElements[1]) { $commandAst.CommandElements[1].Value } else { $null }
+	# Sub-command or command's options
+	$subCommandOrOption = if ($commandAst.CommandElements[2]) { $commandAst.CommandElements[2].Value } else { $null }
+	# Sub-command's option or option's value of main command
+	$subCommandOptionOrOptionValue = if ($commandAst.CommandElements[3]) { $commandAst.CommandElements[3].Value } else { $null }
 
 	# If word to complete is equal to main command, suggest all commands & options of `install` command
-	if (AreEqual $secondPart $wordToComplete) {
+	if (AreEqual $mainCommand $wordToComplete) {
 		$completions += $commands | Where-Object $searchBlock | ForEach-Object {
 			[System.Management.Automation.CompletionResult]::new($_, $_, 'Command', $_)
 		}
-		$completions += $options['install'] | Where-Object $searchBlock | ForEach-Object {
+		$completions += $options['install'].Keys | Where-Object $searchBlock | ForEach-Object {
 			[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)
 		}
 	}
-	# If word to complete is equal to sub-command, suggest sub-commmands
-	if ((-not $(AreEqual $secondPart $wordToComplete)) -and $(AreEqual $thirdPart $wordToComplete)) {
-		$completions += $subCommands[$secondPart].Keys | Where-Object $searchBlock | ForEach-Object {
-			[System.Management.Automation.CompletionResult]::new($_, $_, 'Command', $_)
+	# If word to complete is equal to sub-command/command's options, suggest sub-commmands and command's options
+	elseif (AreEqual $subCommandOrOption $wordToComplete) {
+		# Sub-commands
+		if ($subCommands[$mainCommand]) {
+			$completions += $subCommands[$mainCommand].Keys | Where-Object $searchBlock | ForEach-Object {
+				[System.Management.Automation.CompletionResult]::new($_, $_, 'Command', $_)
+			}
+		}
+		# Main command's options
+		if ($options[$mainCommand]) {
+			$completions += $options[$mainCommand].Keys | Where-Object $searchBlock | ForEach-Object {
+				[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)
+			}
 		}
 	}
-	# If word to complete is equal to sub-command's options, suggest sub-command's options
-	if (
-		(-not $(AreEqual $secondPart $wordToComplete)) -and
-		(-not $(AreEqual $thirdPart $wordToComplete)) -and
-		$(AreEqual $fourthPart $wordToComplete)
-	) {
-		$subCommand = $subCommands[$secondPart][$thirdPart]
-		$subCommandOptions = if ($subCommand.options) { $subCommand.options } else { $null }
+	# If word to complete is equal to main command option's values/sub-command's options,
+	# suggest main command option's values or sub-command's options
+	elseif (AreEqual $subCommandOptionOrOptionValue $wordToComplete) {
+		# Main command option's value
+		if ($options[$mainCommand][$subCommandOrOption]) {
+			$optionValues = $options[$mainCommand][$subCommandOrOption]
 
-		$completions += $subCommandOptions | Where-Object $searchBlock | ForEach-Object {
-			[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)
+			$completions += $optionValues | Where-Object $searchBlock | ForEach-Object {
+				[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+			}
+
+			# Immediately return if it's command's value completion
+			return $completions
+		}
+
+		# Sub-command's options
+		if ($subCommands[$mainCommand][$subCommandOrOption]) {
+			$subCommand = $subCommands[$mainCommand][$subCommandOrOption]
+			$subCommandOptionOrOptionValues = if ($subCommand.options) { $subCommand.options.Keys } else { $null }
+
+			$completions += $subCommandOptionOrOptionValues | Where-Object $searchBlock | ForEach-Object {
+				[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)
+			}
 		}
 	}
 
