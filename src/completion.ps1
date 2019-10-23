@@ -10,8 +10,8 @@ Register-ArgumentCompleter -Native -CommandName @('yarn', 'yarn.cmd') -ScriptBlo
 
 	# Main command
 	$mainCommand = if ($commandAst.CommandElements[1]) { $commandAst.CommandElements[1].Value } else { $null }
-	# Sub-command or command's options
-	$subCommandOrOption = if ($commandAst.CommandElements[2]) { $commandAst.CommandElements[2].Value } else { $null }
+	# Command's value or sub-command or command's options
+	$valueOrsubCommandOrOption = if ($commandAst.CommandElements[2]) { $commandAst.CommandElements[2].Value } else { $null }
 	# Sub-command's option or option's value of main command
 	$subCommandOptionOrOptionValue = if ($commandAst.CommandElements[3]) { $commandAst.CommandElements[3].Value } else { $null }
 
@@ -24,8 +24,14 @@ Register-ArgumentCompleter -Native -CommandName @('yarn', 'yarn.cmd') -ScriptBlo
 			[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)
 		}
 	}
-	# If word to complete is equal to sub-command/command's options, suggest sub-commmands and command's options
-	elseif (AreEqual $subCommandOrOption $wordToComplete) {
+	# If word to complete is equal to command's value/sub-command/command's options, suggest command's values and sub-commmands and command's options
+	elseif (AreEqual $valueOrsubCommandOrOption $wordToComplete) {
+		# Main command's values
+		if ($commandValues[$mainCommand]) {
+			$completions += Invoke-Command -ScriptBlock $commandValues[$mainCommand] | ForEach-Object {
+				[System.Management.Automation.CompletionResult]::new($_, $_, 'DynamicKeyword', $_)
+			}
+		}
 		# Sub-commands
 		if ($subCommands[$mainCommand]) {
 			$completions += $subCommands[$mainCommand].Keys | Where-Object $searchBlock | ForEach-Object {
@@ -43,8 +49,8 @@ Register-ArgumentCompleter -Native -CommandName @('yarn', 'yarn.cmd') -ScriptBlo
 	# suggest main command option's values or sub-command's options
 	elseif (AreEqual $subCommandOptionOrOptionValue $wordToComplete) {
 		# Main command option's value
-		if ($options[$mainCommand][$subCommandOrOption]) {
-			$optionValues = $options[$mainCommand][$subCommandOrOption]
+		if ($options[$mainCommand][$valueOrsubCommandOrOption]) {
+			$optionValues = $options[$mainCommand][$valueOrsubCommandOrOption]
 
 			$completions += $optionValues | Where-Object $searchBlock | ForEach-Object {
 				[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
@@ -55,8 +61,8 @@ Register-ArgumentCompleter -Native -CommandName @('yarn', 'yarn.cmd') -ScriptBlo
 		}
 
 		# Sub-command's options
-		if ($subCommands[$mainCommand][$subCommandOrOption]) {
-			$subCommand = $subCommands[$mainCommand][$subCommandOrOption]
+		if ($subCommands[$mainCommand][$valueOrsubCommandOrOption]) {
+			$subCommand = $subCommands[$mainCommand][$valueOrsubCommandOrOption]
 			$subCommandOptionOrOptionValues = if ($subCommand.options) { $subCommand.options.Keys } else { $null }
 
 			$completions += $subCommandOptionOrOptionValues | Where-Object $searchBlock | ForEach-Object {

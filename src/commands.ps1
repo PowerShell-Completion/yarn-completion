@@ -1,5 +1,6 @@
 . $PSScriptRoot\options.ps1
 . $PSScriptRoot\subCommands.ps1
+. $PSScriptRoot\values.ps1
 
 Set-Variable -Name commands -Value @(
 	'add',
