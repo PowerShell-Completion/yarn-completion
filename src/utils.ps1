@@ -1,4 +1,4 @@
-function AreEqual($a, $b) {
+function Compare-CommandElement($a, $b) {
 	try {
 		return (
 			([string]::IsNullOrEmpty($a) -and [string]::IsNullOrEmpty($b)) -or
