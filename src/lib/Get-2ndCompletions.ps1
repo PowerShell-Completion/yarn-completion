@@ -14,7 +14,7 @@ function Get-2ndCompletions([string] $WordToComplete, [string] $Command) {
 
 	# Command's values
 	if ($commandValues[$Command]) {
-		$completions += Invoke-Command -ScriptBlock $commandValues[$Command] | ForEach-Object {
+		$completions += Invoke-Command -ScriptBlock $commandValues[$Command] -ArgumentList @($WordToComplete) | ForEach-Object {
 			[System.Management.Automation.CompletionResult]::new($_, $_, 'DynamicKeyword', $_)
 		}
 	}

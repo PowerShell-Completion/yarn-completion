@@ -5,7 +5,11 @@ if (-not $commandValues) {
 }
 
 $commandValues['run'] = {
-	$scriptNames = Get-PackageScripts
+	param ([string] $WordToComplete)
+
+	$scriptNames = Get-PackageScripts | Where-Object {
+		$_ -like "$WordToComplete*"
+	}
 
 	return $scriptNames
 }
