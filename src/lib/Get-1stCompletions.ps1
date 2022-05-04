@@ -17,6 +17,10 @@ function Get-1stCompletions([string] $WordToComplete) {
 	$completions += $options['install'].Keys | Where-Object $searchBlock | ForEach-Object {
 		[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterName', $_)
 	}
+	# Suggest running scripts from package.json files
+	$completions += Get-PackageScripts | Where-Object $searchBlock | ForEach-Object {
+		[System.Management.Automation.CompletionResult]::new($_, $_, 'Command', $_)
+	}
 
 	return $completions
 }
